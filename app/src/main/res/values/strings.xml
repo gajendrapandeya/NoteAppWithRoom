@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">NoteAppWithRoom</string>
+    <string name="this_is_some_dummy_text">This is some dummy text</string>
+    <string name="apr_26">Apr 26</string>
+    <string name="back_arrow">Back Arrow</string>
+    <string name="check_mark">Check Mark</string>
+    <string name="this_is_some_note_text">This is some note text</string>
 </resources>
