@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.codermonkeys.noteappwithroom.adapters.NotesRecyclerAdapter;
 import com.codermonkeys.noteappwithroom.models.Notes;
@@ -14,7 +15,7 @@ import com.codermonkeys.noteappwithroom.util.VerticalSpacingItemDecorator;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements NotesRecyclerAdapter.onNoteListner {
+public class MainActivity extends AppCompatActivity implements NotesRecyclerAdapter.onNoteListner, View.OnClickListener {
 
     //Ui components
     private RecyclerView mRecyclerView;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements NotesRecyclerAdap
 
         mRecyclerView = findViewById(R.id.recycler_view);
         mToolbar = findViewById(R.id.notes_toolbar);
+        findViewById(R.id.fab).setOnClickListener(this);
 
         setSupportActionBar(mToolbar);
         setTitle("Notes");
@@ -65,6 +67,12 @@ public class MainActivity extends AppCompatActivity implements NotesRecyclerAdap
 
         Intent intent = new Intent(MainActivity.this, NotesActivity.class);
         intent.putExtra("selected_note", mNotes.get(position));
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(MainActivity.this, NotesActivity.class);
         startActivity(intent);
     }
 }
