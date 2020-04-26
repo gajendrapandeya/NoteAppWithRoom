@@ -2,6 +2,7 @@ package com.codermonkeys.noteappwithroom;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -14,7 +15,7 @@ import android.widget.TextView;
 
 import com.codermonkeys.noteappwithroom.models.Notes;
 
-public class NotesActivity extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
+public class NotesActivity extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, View.OnClickListener {
 
     public static final int EDIT_MODE_ENABLED = 1;
     public static final int EDIT_MODE_DISABLED = 0;
@@ -85,10 +86,13 @@ public class NotesActivity extends AppCompatActivity implements View.OnTouchList
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     private void setListners() {
 
         mLineEditText.setOnTouchListener(this);
         mGestureDetector = new GestureDetector(this, this);
+        mViewTitle.setOnClickListener(this);
+        mCheck.setOnClickListener(this);
     }
 
     private boolean getIncomingIntent() {
@@ -166,5 +170,35 @@ public class NotesActivity extends AppCompatActivity implements View.OnTouchList
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         return false;
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+
+            case R.id.toolbar_check:{
+                disableEditMode();
+                break;
+            }
+
+            case R.id.note_edit_title:{
+               enableEditMode();
+               mEditTitle.requestFocus();
+               mEditTitle.setSelection(mEditTitle.length());
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if(mMode == EDIT_MODE_ENABLED) {
+            onClick(mCheck);
+        } else {
+            super.onBackPressed();
+        }
+
     }
 }
