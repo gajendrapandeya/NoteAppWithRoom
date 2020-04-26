@@ -3,10 +3,23 @@ package com.codermonkeys.noteappwithroom.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Notes implements Parcelable {
 
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    @ColumnInfo(name = "title")
     private String title;
+
+    @ColumnInfo(name = "content")
     private String content;
+
+    @ColumnInfo(name = "timestamp")
     private String timeStamp;
 
     public Notes(String title, String content, String timeStamp) {
@@ -18,7 +31,9 @@ public class Notes implements Parcelable {
     public Notes() {
     }
 
-    protected Notes(Parcel in) {
+
+    private Notes(Parcel in) {
+        id = in.readInt();
         title = in.readString();
         content = in.readString();
         timeStamp = in.readString();
@@ -60,14 +75,14 @@ public class Notes implements Parcelable {
         this.timeStamp = timeStamp;
     }
 
-    @Override
-    public String toString() {
-        return "Model{" +
-                "title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", timeStamp='" + timeStamp + '\'' +
-                '}';
+    public int getId() {
+        return id;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 
     @Override
     public int describeContents() {
@@ -76,8 +91,19 @@ public class Notes implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
         dest.writeString(title);
         dest.writeString(content);
         dest.writeString(timeStamp);
+    }
+
+    @Override
+    public String toString() {
+        return "Notes{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", timeStamp='" + timeStamp + '\'' +
+                '}';
     }
 }
