@@ -1,7 +1,9 @@
 package com.codermonkeys.noteappwithroom;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements NotesRecyclerAdap
         mRecyclerView.setLayoutManager(layoutManager);
         VerticalSpacingItemDecorator itemDecorator = new VerticalSpacingItemDecorator(10);
         mRecyclerView.addItemDecoration(itemDecorator);
+        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(mRecyclerView);
         mNotesRecyclerAdapter = new NotesRecyclerAdapter(mNotes, this);
         mRecyclerView.setAdapter(mNotesRecyclerAdapter);
     }
@@ -75,4 +78,23 @@ public class MainActivity extends AppCompatActivity implements NotesRecyclerAdap
         Intent intent = new Intent(MainActivity.this, NotesActivity.class);
         startActivity(intent);
     }
+
+    private void deleteNote(Notes notes) {
+
+        mNotes.remove(notes);
+        mNotesRecyclerAdapter.notifyDataSetChanged();
+    }
+
+    private ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            deleteNote(mNotes.get(viewHolder.getAdapterPosition()));
+        }
+    };
 }
