@@ -4,21 +4,26 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.codermonkeys.noteappwithroom.models.Notes;
 
-public class NotesActivity extends AppCompatActivity {
+public class NotesActivity extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
 
     //ui components
     private LineEditText mLineEditText;
     private EditText mEditTitle;
     private TextView mViewTitle;
 
+
     //vars
     private boolean mIsNewNote;
     private Notes mInitialNote;
+    private GestureDetector mGestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,13 @@ public class NotesActivity extends AppCompatActivity {
             setNoteProperties();
         }
 
+        setListners();
+    }
+
+    private void setListners() {
+
+        mLineEditText.setOnTouchListener(this);
+        mGestureDetector = new GestureDetector(this, this);
     }
 
     private boolean getIncomingIntent() {
@@ -63,5 +75,56 @@ public class NotesActivity extends AppCompatActivity {
         mViewTitle.setText(mInitialNote.getTitle());
         mEditTitle.setText(mInitialNote.getTitle());
         mLineEditText.setText(mInitialNote.getContent());
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+
+        return mGestureDetector.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean onSingleTapConfirmed(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTap(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTapEvent(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        return false;
     }
 }
