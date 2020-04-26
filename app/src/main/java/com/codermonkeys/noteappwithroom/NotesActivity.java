@@ -3,6 +3,7 @@ package com.codermonkeys.noteappwithroom;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.codermonkeys.noteappwithroom.models.Notes;
@@ -242,5 +244,21 @@ public class NotesActivity extends AppCompatActivity implements View.OnTouchList
         }
         assert imm != null;
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outPersistentState.putInt("mode", mMode);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+       mMode = savedInstanceState.getInt("mode");
+
+       if(mMode == EDIT_MODE_ENABLED) {
+           enableEditMode();
+       }
     }
 }

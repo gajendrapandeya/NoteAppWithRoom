@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.View;
 
 import com.codermonkeys.noteappwithroom.adapters.NotesRecyclerAdapter;
@@ -97,4 +98,6 @@ public class MainActivity extends AppCompatActivity implements NotesRecyclerAdap
             deleteNote(mNotes.get(viewHolder.getAdapterPosition()));
         }
     };
+
+
 }

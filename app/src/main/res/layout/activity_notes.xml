@@ -31,6 +31,7 @@
         android:padding="5dp"
         android:textColor="@color/black"
         android:textSize="23sp"
-        android:gravity="top"/>
+        android:gravity="top"
+        android:imeOptions="flagNoExtractUi"/>
 
 </LinearLayout>
